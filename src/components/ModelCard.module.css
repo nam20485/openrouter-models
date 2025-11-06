@@ -24,6 +24,23 @@
     gap: 1rem;
 }
 
+.titleLink {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: color 160ms ease;
+}
+
+.titleLink:hover .title,
+.titleLink:focus-visible .title {
+    color: #38bdf8;
+}
+
+.titleLink:focus-visible {
+    outline: 2px solid rgba(56, 189, 248, 0.75);
+    outline-offset: 4px;
+    border-radius: 0.5rem;
+}
 .title {
     margin: 0;
     font-size: 1.25rem;

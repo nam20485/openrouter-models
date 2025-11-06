@@ -2,6 +2,7 @@ import { MouseEvent, memo, useEffect, useMemo, useState } from 'react';
 
 import type { Model, SortKey, SortRule, SortState } from '../types';
 import { sortModels } from '../lib/modelFilters';
+import { getModelPageUrl } from '../lib/modelUrls';
 import styles from './ModelTable.module.css';
 
 interface ModelTableProps {
@@ -45,13 +46,19 @@ const formatCapabilities = (model: Model): string => {
 
 const ModelTableRow = memo(({ model }: { model: Model }) => {
     const capabilities = formatCapabilities(model);
+    const modelUrl = getModelPageUrl(model);
     return (
         <tr>
             <th scope="row">
-                <div className={styles.modelCell}>
+                <a
+                    href={modelUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.modelLink}
+                >
                     <span className={styles.modelName}>{model.name}</span>
                     <span className={styles.modelSlug}>{model.meta.slug}</span>
-                </div>
+                </a>
             </th>
             <td>{model.meta.provider}</td>
             <td className={styles.numeric}>{model.score.rating.toFixed(1)}</td>

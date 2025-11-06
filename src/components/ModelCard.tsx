@@ -1,6 +1,7 @@
 import { memo } from 'react';
 
 import type { Model } from '../types';
+import { getModelPageUrl } from '../lib/modelUrls';
 import styles from './ModelCard.module.css';
 
 interface ModelCardProps {
@@ -43,48 +44,57 @@ const renderSupportBadges = (model: Model) => featureTags(model).map((tag) => (
     </span>
 ));
 
-export const ModelCard = memo(({ model }: ModelCardProps) => (
-    <article className={styles.card}>
-        <header className={styles.header}>
-            <div>
-                <h3 className={styles.title}>{model.name}</h3>
-                <p className={styles.subtitle}>{model.meta.slug}</p>
-            </div>
-            <div className={styles.rating}>
-                <span className={styles.ratingValue}>{model.score.rating.toFixed(1)}</span>
-                <span className={styles.ratingLabel}>Derived rating</span>
-            </div>
-        </header>
+export const ModelCard = memo(({ model }: ModelCardProps) => {
+    const modelUrl = getModelPageUrl(model);
 
-        <p className={styles.description}>{model.description}</p>
+    return (
+        <article className={styles.card}>
+            <header className={styles.header}>
+                <a
+                    href={modelUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.titleLink}
+                >
+                    <h3 className={styles.title}>{model.name}</h3>
+                    <p className={styles.subtitle}>{model.meta.slug}</p>
+                </a>
+                <div className={styles.rating}>
+                    <span className={styles.ratingValue}>{model.score.rating.toFixed(1)}</span>
+                    <span className={styles.ratingLabel}>Derived rating</span>
+                </div>
+            </header>
 
-        <dl className={styles.metrics}>
-            <div>
-                <dt>Prompt price</dt>
-                <dd>{formatCurrency(model.pricing.prompt)}</dd>
-            </div>
-            <div>
-                <dt>Completion price</dt>
-                <dd>{formatCurrency(model.pricing.completion)}</dd>
-            </div>
-            <div>
-                <dt>Context length</dt>
-                <dd>{model.contextLength.toLocaleString()} tokens</dd>
-            </div>
-        </dl>
+            <p className={styles.description}>{model.description}</p>
 
-        <footer className={styles.footer}>
-            <div className={styles.tags}>
-                {renderSupportBadges(model)}
-            </div>
-            <div className={styles.details}>
-                <span>Provider: {model.meta.provider}</span>
-                {model.topProvider.is_moderated !== null && (
-                    <span>
-                        Moderation: {model.topProvider.is_moderated ? 'Provider enforced' : 'Not enforced'}
-                    </span>
-                )}
-            </div>
-        </footer>
-    </article>
-));
+            <dl className={styles.metrics}>
+                <div>
+                    <dt>Prompt price</dt>
+                    <dd>{formatCurrency(model.pricing.prompt)}</dd>
+                </div>
+                <div>
+                    <dt>Completion price</dt>
+                    <dd>{formatCurrency(model.pricing.completion)}</dd>
+                </div>
+                <div>
+                    <dt>Context length</dt>
+                    <dd>{model.contextLength.toLocaleString()} tokens</dd>
+                </div>
+            </dl>
+
+            <footer className={styles.footer}>
+                <div className={styles.tags}>
+                    {renderSupportBadges(model)}
+                </div>
+                <div className={styles.details}>
+                    <span>Provider: {model.meta.provider}</span>
+                    {model.topProvider.is_moderated !== null && (
+                        <span>
+                            Moderation: {model.topProvider.is_moderated ? 'Provider enforced' : 'Not enforced'}
+                        </span>
+                    )}
+                </div>
+            </footer>
+        </article>
+    );
+});
