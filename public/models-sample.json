@@ -1,0 +1,289 @@
+[
+    {
+        "id": "openai/gpt-4o",
+        "name": "OpenAI: GPT-4o",
+        "description": "GPT-4o (omni) is OpenAI's flagship multimodal model balancing latency and quality for production workloads.",
+        "context_length": 128000,
+        "pricing": {
+            "prompt": "0.0025",
+            "completion": "0.0100"
+        },
+        "architecture": {
+            "modality": "text+image->text",
+            "input_modalities": [
+                "text",
+                "image",
+                "file"
+            ],
+            "output_modalities": [
+                "text"
+            ],
+            "tokenizer": "GPT",
+            "instruct_type": null
+        },
+        "supported_parameters": [
+            "logit_bias",
+            "max_tokens",
+            "response_format",
+            "tool_choice",
+            "tools",
+            "top_p"
+        ],
+        "top_provider": {
+            "context_length": 128000,
+            "max_completion_tokens": 16384,
+            "is_moderated": true
+        }
+    },
+    {
+        "id": "openai/gpt-4o-mini",
+        "name": "OpenAI: GPT-4o Mini",
+        "description": "Cost-efficient omni model with strong reasoning and multimodal support at a fraction of the price of GPT-4o.",
+        "context_length": 128000,
+        "pricing": {
+            "prompt": "0.00015",
+            "completion": "0.00060"
+        },
+        "architecture": {
+            "modality": "text+image->text",
+            "input_modalities": [
+                "text",
+                "image",
+                "file"
+            ],
+            "output_modalities": [
+                "text"
+            ],
+            "tokenizer": "GPT",
+            "instruct_type": null
+        },
+        "supported_parameters": [
+            "max_tokens",
+            "response_format",
+            "structured_outputs",
+            "tool_choice",
+            "tools",
+            "top_p"
+        ],
+        "top_provider": {
+            "context_length": 128000,
+            "max_completion_tokens": 16384,
+            "is_moderated": true
+        }
+    },
+    {
+        "id": "anthropic/claude-3.5-sonnet",
+        "name": "Anthropic: Claude 3.5 Sonnet",
+        "description": "Balanced flagship Claude model with excellent reasoning, tool use, and vision understanding capabilities.",
+        "context_length": 200000,
+        "pricing": {
+            "prompt": "0.003",
+            "completion": "0.015"
+        },
+        "architecture": {
+            "modality": "text+image->text",
+            "input_modalities": [
+                "text",
+                "image",
+                "file"
+            ],
+            "output_modalities": [
+                "text"
+            ],
+            "tokenizer": "Claude",
+            "instruct_type": null
+        },
+        "supported_parameters": [
+            "max_tokens",
+            "stop",
+            "temperature",
+            "tool_choice",
+            "tools",
+            "top_p"
+        ],
+        "top_provider": {
+            "context_length": 200000,
+            "max_completion_tokens": 8192,
+            "is_moderated": true
+        }
+    },
+    {
+        "id": "anthropic/claude-3.5-haiku",
+        "name": "Anthropic: Claude 3.5 Haiku",
+        "description": "Latency-optimized Claude tier offering fast multimodal responses with solid quality for lightweight workloads.",
+        "context_length": 200000,
+        "pricing": {
+            "prompt": "0.0008",
+            "completion": "0.004"
+        },
+        "architecture": {
+            "modality": "text+image->text",
+            "input_modalities": [
+                "text",
+                "image",
+                "file"
+            ],
+            "output_modalities": [
+                "text"
+            ],
+            "tokenizer": "Claude",
+            "instruct_type": null
+        },
+        "supported_parameters": [
+            "max_tokens",
+            "stop",
+            "temperature",
+            "tool_choice",
+            "tools",
+            "top_p"
+        ],
+        "top_provider": {
+            "context_length": 200000,
+            "max_completion_tokens": 8192,
+            "is_moderated": true
+        }
+    },
+    {
+        "id": "mistralai/mistral-small",
+        "name": "Mistral: Small",
+        "description": "22B parameter balanced model for production assistants with strong multilingual and coding skills.",
+        "context_length": 32768,
+        "pricing": {
+            "prompt": "0.0002",
+            "completion": "0.0006"
+        },
+        "architecture": {
+            "modality": "text->text",
+            "input_modalities": [
+                "text"
+            ],
+            "output_modalities": [
+                "text"
+            ],
+            "tokenizer": "Mistral",
+            "instruct_type": null
+        },
+        "supported_parameters": [
+            "frequency_penalty",
+            "max_tokens",
+            "presence_penalty",
+            "response_format",
+            "tool_choice",
+            "tools",
+            "top_p"
+        ],
+        "top_provider": {
+            "context_length": 32768,
+            "max_completion_tokens": 32768,
+            "is_moderated": false
+        }
+    },
+    {
+        "id": "mistralai/mistral-nemo:free",
+        "name": "Mistral: Nemo (free)",
+        "description": "Community-hosted Apache licensed model with 128k context window and function calling support.",
+        "context_length": 131072,
+        "pricing": {
+            "prompt": "0",
+            "completion": "0"
+        },
+        "architecture": {
+            "modality": "text->text",
+            "input_modalities": [
+                "text"
+            ],
+            "output_modalities": [
+                "text"
+            ],
+            "tokenizer": "Mistral",
+            "instruct_type": "mistral"
+        },
+        "supported_parameters": [
+            "frequency_penalty",
+            "max_tokens",
+            "presence_penalty",
+            "repetition_penalty",
+            "temperature",
+            "top_p"
+        ],
+        "top_provider": {
+            "context_length": 131072,
+            "max_completion_tokens": 128000,
+            "is_moderated": false
+        }
+    },
+    {
+        "id": "deepseek/deepseek-r1-distill-llama-70b",
+        "name": "DeepSeek: R1 Distill Llama 70B",
+        "description": "Reasoning-centric distillation of DeepSeek R1 on top of Llama 3.3 70B for advanced STEM and agentic workflows.",
+        "context_length": 131072,
+        "pricing": {
+            "prompt": "0.00003",
+            "completion": "0.00013"
+        },
+        "architecture": {
+            "modality": "text->text",
+            "input_modalities": [
+                "text"
+            ],
+            "output_modalities": [
+                "text"
+            ],
+            "tokenizer": "Llama3",
+            "instruct_type": "deepseek-r1"
+        },
+        "supported_parameters": [
+            "frequency_penalty",
+            "include_reasoning",
+            "max_tokens",
+            "reasoning",
+            "structured_outputs",
+            "tool_choice",
+            "tools",
+            "top_p"
+        ],
+        "top_provider": {
+            "context_length": 131072,
+            "max_completion_tokens": 131072,
+            "is_moderated": false
+        }
+    },
+    {
+        "id": "google/gemini-2.0-flash",
+        "name": "Google: Gemini 2.0 Flash",
+        "description": "Google's high-speed multimodal model optimized for tool-using agents with improved coding and function calling.",
+        "context_length": 1048576,
+        "pricing": {
+            "prompt": "0.0001",
+            "completion": "0.0004"
+        },
+        "architecture": {
+            "modality": "text+image->text",
+            "input_modalities": [
+                "text",
+                "image",
+                "file",
+                "audio"
+            ],
+            "output_modalities": [
+                "text"
+            ],
+            "tokenizer": "Gemini",
+            "instruct_type": null
+        },
+        "supported_parameters": [
+            "max_tokens",
+            "response_format",
+            "seed",
+            "temperature",
+            "tool_choice",
+            "tools",
+            "top_p"
+        ],
+        "top_provider": {
+            "context_length": 1048576,
+            "max_completion_tokens": 8192,
+            "is_moderated": false
+        }
+    }
+]

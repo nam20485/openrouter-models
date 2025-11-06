@@ -1,0 +1,137 @@
+.panel {
+    display: grid;
+    gap: 1rem;
+    background: rgba(20, 24, 38, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+}
+
+.rowPrimary,
+.rowSecondary {
+    display: grid;
+    gap: 1rem;
+}
+
+.rowPrimary {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    align-items: end;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: #e8edff;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(11, 16, 29, 0.65);
+    color: #f5f8ff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus,
+.field select:focus {
+    outline: none;
+    border-color: rgba(120, 200, 255, 0.8);
+    box-shadow: 0 0 0 3px rgba(120, 200, 255, 0.25);
+}
+
+.field select[multiple] {
+    height: 6.5rem;
+}
+
+.fieldGroup {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.hint {
+    font-size: 0.75rem;
+    opacity: 0.72;
+}
+
+.toggleRow,
+.sortRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    border: none;
+    margin: 0;
+    padding: 0;
+    color: #9fb5ff;
+}
+
+.toggleRow legend,
+.sortRow legend {
+    width: 100%;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(159, 181, 255, 0.85);
+}
+
+.toggle,
+.toggleActive {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 0.45rem 0.95rem;
+    background: rgba(11, 16, 29, 0.6);
+    color: #e3ebff;
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.toggle:hover,
+.toggleActive:hover {
+    transform: translateY(-1px);
+}
+
+.toggleActive {
+    background: rgba(102, 141, 255, 0.85);
+    border-color: rgba(102, 141, 255, 0.85);
+    color: #0b101d;
+    box-shadow: 0 6px 18px rgba(102, 141, 255, 0.35);
+}
+
+.reset {
+    justify-self: start;
+    padding: 0.55rem 1.1rem;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(11, 16, 29, 0.65);
+    color: #f5f8ff;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.reset:hover {
+    border-color: rgba(120, 200, 255, 0.8);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .panel {
+        padding: 1.1rem;
+    }
+
+    .rowPrimary {
+        grid-template-columns: 1fr;
+    }
+
+    .field select[multiple] {
+        height: 8rem;
+    }
+}

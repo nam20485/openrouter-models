@@ -1,0 +1,139 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.65));
+    backdrop-filter: blur(12px);
+    color: #e2e8f0;
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.35);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 32px 64px rgba(15, 23, 42, 0.45);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.subtitle {
+    margin: 0.125rem 0 0;
+    color: rgba(148, 163, 184, 0.85);
+    font-size: 0.85rem;
+}
+
+.rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: #facc15;
+}
+
+.ratingValue {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.ratingLabel {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+.description {
+    margin: 0;
+    color: rgba(226, 232, 240, 0.95);
+    line-height: 1.55;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.metrics div {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.metrics dt {
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(148, 163, 184, 0.85);
+}
+
+.metrics dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.18);
+    border: 1px solid rgba(96, 165, 250, 0.35);
+    color: #bfdbfe;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: rgba(148, 163, 184, 0.9);
+}
+
+@media (max-width: 640px) {
+    .card {
+        padding: 1.125rem;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+
+    .rating {
+        align-items: flex-start;
+    }
+}
