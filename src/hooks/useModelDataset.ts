@@ -23,7 +23,7 @@ interface UseModelDatasetState {
     filterDescription: string;
 }
 
-const DEFAULT_SORT: SortState = { key: 'rating', direction: 'desc' };
+const DEFAULT_SORT: SortState = [{ key: 'rating', direction: 'desc' }];
 
 type InternalState = Omit<UseModelDatasetState, 'refresh' | 'filterDescription'>;
 
@@ -39,7 +39,7 @@ export const useModelDataset = ({ sort, filters }: UseModelDatasetOptions = {}):
         filteredModels: [],
     });
 
-    const sortState = sort ?? DEFAULT_SORT;
+    const sortState = sort && sort.length ? sort : DEFAULT_SORT;
     const filterState = filters ?? state.appliedFilters;
 
     const refresh = useCallback(async () => {

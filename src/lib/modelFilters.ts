@@ -1,4 +1,4 @@
-import { FilterState, Model, SortState } from '../types';
+import { FilterState, Model, SortRule, SortState } from '../types';
 
 const textIncludes = (haystack: string, needle: string): boolean => haystack.toLowerCase().includes(needle.toLowerCase());
 
@@ -74,7 +74,7 @@ export const filterModels = (models: Model[], filters: FilterState): Model[] => 
     return true;
 });
 
-const getSortValue = (model: Model, key: SortState['key']): number | string | null => {
+const getSortValue = (model: Model, key: SortRule['key']): number | string | null => {
     switch (key) {
         case 'promptPrice':
             return model.pricing.prompt ?? null;
@@ -82,6 +82,10 @@ const getSortValue = (model: Model, key: SortState['key']): number | string | nu
             return model.pricing.completion ?? null;
         case 'context':
             return model.contextLength;
+        case 'provider':
+            return model.meta.provider.toLowerCase();
+        case 'year':
+            return model.meta.createdAt?.getFullYear() ?? null;
         case 'name':
             return model.name.toLowerCase();
         case 'rating':
@@ -90,38 +94,70 @@ const getSortValue = (model: Model, key: SortState['key']): number | string | nu
     }
 };
 
+const compareNumeric = (valueA: number | null, valueB: number | null, direction: number): number => {
+    if (valueA === null && valueB === null) {
+        return 0;
+    }
+
+    if (valueA === null) {
+        return 1;
+    }
+
+    if (valueB === null) {
+        return -1;
+    }
+
+    const delta = valueA - valueB;
+    if (delta === 0) {
+        return 0;
+    }
+
+    return delta * direction;
+};
+
+const compareRule = (a: Model, b: Model, rule: SortRule): number => {
+    const direction = rule.direction === 'asc' ? 1 : -1;
+    const valueA = getSortValue(a, rule.key);
+    const valueB = getSortValue(b, rule.key);
+
+    if (typeof valueA === 'string' && typeof valueB === 'string') {
+        const result = valueA.localeCompare(valueB);
+        if (result !== 0) {
+            return result * direction;
+        }
+        return 0;
+    }
+
+    const comparison = compareNumeric(
+        typeof valueA === 'number' ? valueA : null,
+        typeof valueB === 'number' ? valueB : null,
+        direction,
+    );
+
+    if (comparison !== 0) {
+        return comparison;
+    }
+
+    return 0;
+};
+
 export const sortModels = (models: Model[], sort: SortState): Model[] => {
+    if (!sort.length) {
+        return [...models];
+    }
+
+    const rules = sort;
     const sorted = [...models];
-    const direction = sort.direction === 'asc' ? 1 : -1;
 
     sorted.sort((a, b) => {
-        const valueA = getSortValue(a, sort.key);
-        const valueB = getSortValue(b, sort.key);
-
-        if (typeof valueA === 'string' && typeof valueB === 'string') {
-            return valueA.localeCompare(valueB) * direction;
+        for (const rule of rules) {
+            const result = compareRule(a, b, rule);
+            if (result !== 0) {
+                return result;
+            }
         }
 
-        const numericA = typeof valueA === 'number' ? valueA : null;
-        const numericB = typeof valueB === 'number' ? valueB : null;
-
-        if (numericA === null && numericB === null) {
-            return a.name.localeCompare(b.name);
-        }
-
-        if (numericA === null) {
-            return 1;
-        }
-
-        if (numericB === null) {
-            return -1;
-        }
-
-        if (numericA === numericB) {
-            return a.name.localeCompare(b.name) * direction;
-        }
-
-        return (numericA - numericB) * direction;
+        return a.name.localeCompare(b.name);
     });
 
     return sorted;

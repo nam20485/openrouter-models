@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { normalizeModels } from './modelTransforms';
-import type { RawModel } from '../types';
+import type { Model, RawModel } from '../types';
 
 describe('normalizeModels', () => {
     const buildRawModels = (): RawModel[] => ([
@@ -99,7 +99,7 @@ describe('normalizeModels', () => {
             maxContext: 16384,
         });
 
-        const [visionPro, plainText, audioFree] = result.models;
+        const [visionPro, plainText, audioFree] = result.models as [Model, Model, Model];
 
         expect(visionPro.supportedParameters).toEqual(['tools', 'response_format']);
         expect(visionPro.capabilities).toMatchObject({

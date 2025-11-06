@@ -150,20 +150,35 @@ describe('sortModels', () => {
     ];
 
     it('sorts by rating descending by default', () => {
-        const sorted = sortModels(models, { key: 'rating', direction: 'desc' });
+        const sorted = sortModels(models, [{ key: 'rating', direction: 'desc' }]);
         expect(sorted.map((m) => m.id)).toEqual(['b', 'a', 'c']);
     });
 
     it('sorts by prompt price ascending', () => {
-        const sorted = sortModels(models, { key: 'promptPrice', direction: 'asc' });
+        const sorted = sortModels(models, [{ key: 'promptPrice', direction: 'asc' }]);
         expect(sorted.map((m) => m.id)).toEqual(['b', 'a', 'c']);
     });
 
     it('sorts by completion price descending (nulls last)', () => {
         const withNull = buildModel({ id: 'd', name: 'D', pricing: { prompt: 0.002, completion: null, request: null } });
-        const sorted = sortModels([...models, withNull], { key: 'completionPrice', direction: 'desc' });
+        const sorted = sortModels([...models, withNull], [{ key: 'completionPrice', direction: 'desc' }]);
         const last = sorted[sorted.length - 1];
         expect(last?.id).toBe('d');
+    });
+
+    it('applies secondary sort rules when primary values are equal', () => {
+        const withSameRating = [
+            buildModel({ id: 'x', name: 'Alpha', pricing: { prompt: 0.004, completion: 0.002, request: null }, score: { rating: 4.5, costScore: 0.5, contextScore: 0.3, featureScore: 0.4 } }),
+            buildModel({ id: 'y', name: 'Beta', pricing: { prompt: 0.003, completion: 0.002, request: null }, score: { rating: 4.5, costScore: 0.6, contextScore: 0.4, featureScore: 0.5 } }),
+            buildModel({ id: 'z', name: 'Gamma', pricing: { prompt: 0.002, completion: 0.002, request: null }, score: { rating: 4.5, costScore: 0.7, contextScore: 0.5, featureScore: 0.6 } }),
+        ];
+
+        const sorted = sortModels(withSameRating, [
+            { key: 'rating', direction: 'desc' },
+            { key: 'promptPrice', direction: 'asc' },
+        ]);
+
+        expect(sorted.map((model) => model.id)).toEqual(['z', 'y', 'x']);
     });
 });
 

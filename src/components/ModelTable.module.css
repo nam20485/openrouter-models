@@ -33,6 +33,54 @@
     color: rgba(191, 219, 254, 0.9);
 }
 
+.headerNumeric {
+    text-align: right;
+}
+
+.headerButton,
+.headerButtonActive {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font: inherit;
+    color: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.headerButton:hover,
+.headerButton:focus-visible,
+.headerButtonActive:focus-visible {
+    color: #f8fafc;
+    outline: none;
+}
+
+.headerButtonActive {
+    color: #f8fafc;
+}
+
+.sortBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+}
+
+.sortIndex {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 0.55rem;
+    background: rgba(148, 163, 184, 0.35);
+    color: #0f172a;
+    font-weight: 700;
+}
 .table tbody tr:hover {
     background: rgba(37, 54, 84, 0.65);
 }
@@ -57,6 +105,11 @@
     white-space: nowrap;
 }
 
+.assistiveDescription {
+    margin: 0.75rem 0 0;
+    font-size: 0.8rem;
+    color: rgba(226, 232, 240, 0.75);
+}
 .visuallyHidden {
     position: absolute;
     width: 1px;

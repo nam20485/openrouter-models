@@ -1,6 +1,6 @@
 import { ChangeEvent, memo, useCallback } from 'react';
 
-import type { FilterState, SortKey, SortState } from '../types';
+import type { FilterState, SortKey, SortRule, SortState } from '../types';
 import styles from './FilterPanel.module.css';
 
 interface FilterPanelProps {
@@ -28,11 +28,13 @@ const toggleBooleanFilter = (
     });
 };
 
+const primarySortRule = (sort: SortState): SortRule => sort[0] ?? { key: 'rating', direction: 'desc' };
+
 const updateSort = (current: SortState, key: SortKey): SortState => {
-    if (current.key === key) {
-        return { key, direction: current.direction === 'asc' ? 'desc' : 'asc' };
-    }
-    return { key, direction: key === 'name' ? 'asc' : 'desc' };
+    const nextDirection = current[0]?.key === key
+        ? (current[0].direction === 'asc' ? 'desc' : 'asc')
+        : (key === 'name' || key === 'provider' ? 'asc' : 'desc');
+    return [{ key, direction: nextDirection }];
 };
 
 export const FilterPanel = memo(({
@@ -82,6 +84,8 @@ export const FilterPanel = memo(({
     const handleSortChange = useCallback((key: SortKey) => {
         onSortChange(updateSort(sort, key));
     }, [onSortChange, sort]);
+
+    const primarySort = primarySortRule(sort);
 
     return (
         <section className={styles.panel} aria-label="Filter and sorting controls">
@@ -206,43 +210,43 @@ export const FilterPanel = memo(({
                     <legend>Sort</legend>
                     <button
                         type="button"
-                        className={sort.key === 'rating' ? styles.toggleActive : styles.toggle}
+                        className={primarySort.key === 'rating' ? styles.toggleActive : styles.toggle}
                         onClick={() => handleSortChange('rating')}
                         disabled={isLoading}
                     >
-                        Rating {sort.key === 'rating' ? `(${sort.direction})` : ''}
+                        Rating {primarySort.key === 'rating' ? `(${primarySort.direction})` : ''}
                     </button>
                     <button
                         type="button"
-                        className={sort.key === 'promptPrice' ? styles.toggleActive : styles.toggle}
+                        className={primarySort.key === 'promptPrice' ? styles.toggleActive : styles.toggle}
                         onClick={() => handleSortChange('promptPrice')}
                         disabled={isLoading}
                     >
-                        Prompt price {sort.key === 'promptPrice' ? `(${sort.direction})` : ''}
+                        Prompt price {primarySort.key === 'promptPrice' ? `(${primarySort.direction})` : ''}
                     </button>
                     <button
                         type="button"
-                        className={sort.key === 'completionPrice' ? styles.toggleActive : styles.toggle}
+                        className={primarySort.key === 'completionPrice' ? styles.toggleActive : styles.toggle}
                         onClick={() => handleSortChange('completionPrice')}
                         disabled={isLoading}
                     >
-                        Completion price {sort.key === 'completionPrice' ? `(${sort.direction})` : ''}
+                        Completion price {primarySort.key === 'completionPrice' ? `(${primarySort.direction})` : ''}
                     </button>
                     <button
                         type="button"
-                        className={sort.key === 'context' ? styles.toggleActive : styles.toggle}
+                        className={primarySort.key === 'context' ? styles.toggleActive : styles.toggle}
                         onClick={() => handleSortChange('context')}
                         disabled={isLoading}
                     >
-                        Context {sort.key === 'context' ? `(${sort.direction})` : ''}
+                        Context {primarySort.key === 'context' ? `(${primarySort.direction})` : ''}
                     </button>
                     <button
                         type="button"
-                        className={sort.key === 'name' ? styles.toggleActive : styles.toggle}
+                        className={primarySort.key === 'name' ? styles.toggleActive : styles.toggle}
                         onClick={() => handleSortChange('name')}
                         disabled={isLoading}
                     >
-                        Alphabetical {sort.key === 'name' ? `(${sort.direction})` : ''}
+                        Alphabetical {primarySort.key === 'name' ? `(${primarySort.direction})` : ''}
                     </button>
                 </fieldset>
 

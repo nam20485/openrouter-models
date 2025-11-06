@@ -109,9 +109,11 @@ export interface FilterState {
     freeOnly: boolean;
 }
 
-export type SortKey = 'rating' | 'promptPrice' | 'completionPrice' | 'context' | 'name';
+export type SortKey = 'rating' | 'promptPrice' | 'completionPrice' | 'context' | 'name' | 'provider' | 'year';
 
-export interface SortState {
+export interface SortRule {
     key: SortKey;
     direction: 'asc' | 'desc';
 }
+
+export type SortState = SortRule[];

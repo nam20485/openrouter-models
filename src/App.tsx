@@ -9,7 +9,7 @@ import { defaultFilters } from './lib/modelTransforms';
 import type { FilterState, SortState } from './types';
 import styles from './App.module.css';
 
-const DEFAULT_SORT: SortState = { key: 'rating', direction: 'desc' };
+const DEFAULT_SORT: SortState = [{ key: 'rating', direction: 'desc' }];
 
 const deriveBounds = (metrics?: { minPromptPrice: number; maxPromptPrice: number; minContext: number; maxContext: number; }) => ({
     prompt: [metrics?.minPromptPrice ?? 0, metrics?.maxPromptPrice ?? 0] as [number, number],
@@ -45,7 +45,7 @@ const useResolvedFilters = (filters: FilterState, debouncedSearch: string) => us
 
 const useFilterState = () => {
     const [filters, setFilters] = useState<FilterState>(() => ({ ...defaultFilters }));
-    const [sort, setSort] = useState<SortState>(DEFAULT_SORT);
+    const [sort, setSort] = useState<SortState>(() => [...DEFAULT_SORT]);
     const debouncedSearch = useDebouncedValue(filters.search, 250);
     const resolvedFilters = useResolvedFilters(filters, debouncedSearch);
 
@@ -90,7 +90,7 @@ export const App = () => {
 
     const handleReset = () => {
         setFilters({ ...defaultFilters });
-        setSort(DEFAULT_SORT);
+        setSort([...DEFAULT_SORT]);
     };
 
     const handleViewModeChange = (mode: 'grid' | 'list') => {
@@ -185,7 +185,7 @@ export const App = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <ModelTable models={filteredModels} />
+                                    <ModelTable models={filteredModels} initialSort={sort} />
                             )
                         )}
                     </section>
